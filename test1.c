@@ -4,11 +4,10 @@
 #include <string.h>
 
 int userInput();
-void shuffle(char array[], int dimensions);
-void getPairs();
+void fillGrid();
 
 int main(){
-	getPairs();
+	fillGrid();
 
 	return 0;
 }
@@ -21,7 +20,7 @@ int userInput(){
 	return difficulty;	
 }
 
-void getPairs(){
+void fillGrid(){
 	srand(time(NULL));
 	int difficulty = userInput(), numPairs, numCards;
 	int dimensions = difficulty*2;
@@ -35,6 +34,7 @@ void getPairs(){
 	}else if(difficulty == 3){
 		numPairs = difficulty * 6;
 	}
+
 	numCards = numPairs * 2;
 	char array[numCards];
 
@@ -45,7 +45,18 @@ void getPairs(){
 		random = rand() % 31 + '!';
 	}
 
-	//shuffle(array, numCards);
+	for(int i = 0; i < numCards; i++){
+		printf("%c", array[i]);
+	}
+
+	int size = numCards;
+
+	for(int i = 0; i < size - 1; i++){
+		int j = rand() % dimensions;
+		const char temp = array[j]; 
+		array[j] = array[i];
+		array[i] = temp;
+	}
 
 	for(int i = 0; i < dimensions; i++){
 		for(int j = 0; j < dimensions; j++){
@@ -54,19 +65,5 @@ void getPairs(){
 		}
 		printf("\n");
 	}
-
 }
 
-void shuffle(char array[], int dimensions){
-	
-	int size = dimensions;
-
-	if(size > 1){
-		for(int i = 0; i < size - 1; i++){
-			int j = rand() % dimensions;
-			const char temp = array[j]; 
-			array[j] = array[i];
-			array[i] = temp;
-		}
-	}
-}
