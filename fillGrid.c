@@ -27,7 +27,7 @@ void fillGrid(){
 	int numPairs, numCards;
 	int dimensions = difficulty*2;
 	char matrix[dimensions][dimensions];
-	char random = rand() % 31 + '!';
+	char random = rand() % 18 + ' ';
 	char array[numCards];
 
 	if(difficulty == 1){
@@ -42,9 +42,12 @@ void fillGrid(){
 
 	for(int i = 0; i < numCards; i++){
 		array[i] = random;
+		array[i]=random;
 		i++;
 		array[i] = random;
-		random = rand() % 31 + '!';
+		random = rand() % 18 + ' ';
+	}
+	for(int i = 0; i < numCards; i++){
 	}
 
 
@@ -61,7 +64,6 @@ void fillGrid(){
 		printf("\n");
 	}
 }
-
 
 void shuffle(char *array, int n) {
     srand((unsigned)time(NULL));
