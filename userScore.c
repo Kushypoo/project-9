@@ -8,6 +8,11 @@ _Bool checkMatch(*/these ints are the board dimension, not user input*/ int boar
 	}
 }
 
+//need to keep this function running as long as the game is running in the main function.
 int userScore(int userDifficulty){
-	
+	int score = 2*(userDifficulty*userDifficulty);	
+	if(!checkMatch){
+		score--;
+	}
+
 }
