@@ -1,0 +1,92 @@
+#include <iostream>
+#include <fstream>
+
+#define STRMAX 10
+#define NUMCARS 5
+#define FILENAME 100
+
+struct RentalCar{
+	int year;
+	char make[STRMAX];
+	char model[STRMAX];
+	float price;
+	_Bool available;
+}
+
+void readCars(ifstream &inputStream, RentalCar carsArray[][NUMCARS+1]);
+void printCarsToTerminal(int carOrder [NUMCARS], RentalCars carsArray [][NUMCARS+1]);
+void printCarsToFile(char outputFile[STRMAX+1], RentalCars carsArray[][NUMCARS+1]);
+void sortCarsByPrice(RentalCars carsArray[][NUMCARS+1]);
+void rentalCarQuery(RentalCars carsArray[][NUMCARS+1]), int carOrder[NUMCARS], int rentDays);
+void rentalCarReserve(int indexNum, int rentDays, RentalCars carsArray[][NUMCARS+1]);
+size_t myStringLength(const char * str);
+int myStringCompare(const char * str1 [], const char * str2 []);
+char * myStringCopy(char * destination, const char * source);
+char * myStringCat(char * destination, const char * source);
+
+
+
+using namespace std;
+
+struct RentalCar{
+	int year;
+	char make[STRMAX];
+	char model[STRMAX];
+	float price;
+	_Bool available;
+}
+
+int main(){
+	
+	char inFile[FILENAME];
+	char outFile[FILENAME];
+	RentalCar cars[NUMCARS];
+	
+	
+	int userInput, rentDays, carIndex;
+	
+	do{
+		cout << "1. Enter your rental car file name." << endl;
+		cout << "2. Print out file contents to terminal." << endl;
+		cout << "3. Print out file contents to output file of your choice." << endl;
+		cout << "4. Sort cars by ascending price order." << endl;
+		cout << "5. How many days will you rent the car?" << endl;
+		cout << "6. Which car would you like to choose and for how many days? Enter the rental index number." << endl;
+		cout << "7. Exit program." << endl;
+		
+		cin >> userInput >> endl;
+		
+		switch(userInput){
+			case 1:
+				//get infile name, insert that and the struct array into readcars to fill the array in.
+				cin >> inFile >> endl;
+				readCars(inFile, 
+				break;
+			case 2:
+				//call the printcarstoterminal function
+				break;
+			case 3:
+				//call the printcarstofile function
+				break;
+			case 4:
+				//call the sortcarsbyprice function
+				break;
+			case 5:
+				//ask user for how many days they want to rent the car
+				//then print out only the cars available sorted by price as well as the total estimated cost based off the number of days they're renting in the rentalcarquery func
+				break;
+			case 6:
+				//ask user which car they want to rent (the car index number int)
+				//ask them for how many days they want to rent it
+				//plug the car choice (index num) and the number of days (rentDays) into the rentalCarReserve function.
+				//if the car isnt available, print a warning message
+				//if it is, change the index number of the car to a * symbol
+				break;
+			case 7:
+				return 0;
+				break;	
+		}
+	}while(userInput > 0 && userInput < 8);
+	
+	return 0;
+}
