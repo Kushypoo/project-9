@@ -1,0 +1,61 @@
+#include <iostream>
+#include <fstream>
+
+#define SIZE 256
+#define ZIP 5
+
+using namespace std;
+
+class RentalCar{
+
+	private:
+
+	int m_year;
+	char m_make[SIZE+1];
+	char m_model[SIZE+1];
+	float m_price;
+	bool m_available;
+
+	public:
+	
+	m_available = false;
+
+};
+
+
+struct RentalAgency{
+
+	char name[SIZE];
+	int zipcode[ZIP+1];
+	RentalCar inventory[ZIP+1];
+	
+};
+
+int main(){
+
+}
+
+int userMenuPrompt(){
+	
+}
+
+void readCars(struct RentalAgency arr*){
+	
+}
+
+void printAgenciesToTerminal(struct RentalAgency arr*){
+	
+}
+
+void estimateRentalCost(struct RentalAgency arr*){
+	
+}
+
+void findCheapestRental(struct RentalAgency arr*){
+	
+}
+
+void reserveCar(struct rentalAgency arr*){
+	
+}
+
