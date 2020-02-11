@@ -17,7 +17,8 @@ class RentalCar{
 	bool m_available;
 
 	public:
-	
+	RentalCar();
+	RentalCar(int year*, char make*, char model*, float price*, bool available*);
 	m_available = false;
 
 };
@@ -30,6 +31,14 @@ struct RentalAgency{
 	RentalCar inventory[ZIP+1];
 	
 };
+
+RentalCar::RentalCar(){
+	
+}
+
+RentalCar::RentalCar(int year*, char make*, char model*, float price*, bool available*){
+	
+}
 
 int main(){
 
