@@ -1,16 +1,16 @@
-
 #include <iostream>
 #include <fstream>
 
 #define SIZE 256
 #define ZIP 5
+#define NUMAGENCY 3
 
 int userMenuPrompt();
-void readCars(struct RentalAgency arr*);
-void printAgenciesToTerminal(struct RentalAgency arr*);
-void estimateRentalCost(struct RentalAgency arr*);
-void findCheapestRental(struct RentalAgency arr*);
-void reserveCar(struct rentalAgency arr*);
+void readCars(struct RentalAgency *arr);
+void printAgenciesToTerminal(struct RentalAgency *arr);
+void estimateRentalCost(struct RentalAgency *arr);
+void findCheapestRental(struct RentalAgency *arr);
+void reserveCar(struct rentalAgency *arr);
 
 using namespace std;
 
@@ -27,9 +27,29 @@ class RentalCar
 
 	public:
 		RentalCar();
-		RentalCar(int year*, char make*, char model*, float price*, bool available*);
-		void printCar();
-		float estimateCost(int rentDays);
+		RentalCar(int *year, char *make, char *model, float *price, bool *available);
+		void printCar(struct RentalAgency *arr);
+		
+		void estimateCost(struct RentalAgency *arr, int agency, int carIndex, int rentDays){
+		
+			float totalCost;
+	
+			totalCost = rentDays * RentalCar[agency].getPrice;
+	
+			cout << "Total Price: " << totalCost;
+		}
+		
+		void setReserve(int *year){ m_year = 0000; }
+		void setYear(int *year){ m_year = year; }
+		void setMake(char *make){m_make = make; }
+		void setModel(char *model){m_model = model; }
+		void setPrice(float *price){m_price = price; }
+		void setAvailable(bool *available){m_available = available; }
+		int getYear(){ return m_year; }
+		char getMake(){ return m_make; }
+		char getModel(){ return m_model; }
+		float getPrice(){ return m_price; }
+		bool getAvailable(){ return m_available; }
 
 };
 
@@ -37,20 +57,27 @@ class RentalCar
 struct RentalAgency{
 
 	char agencyName[SIZE];
-	int zipcode[ZIP+1];
+	int zipcode[ZIP];
 	RentalCar inventory[ZIP];
 	
+	char charZip(int *zipcode){
+		char zip[ZIP];
+		for(int i = 0; i < ZIP; i++){
+			zip[i] = zipcode[i];
+		}
+		return zip;
+	}
 };
 
 RentalCar::RentalCar(){
 	m_year = 2017;
 	m_make = "Toyota";
-	m_model = "Corolla;
+	m_model = "Corolla";
 	m_price = 100.00f;
 	m_available = false;
 }
 
-RentalCar::RentalCar(int year*, char make*, char model*, float price*, bool available*){
+RentalCar::RentalCar(int *year, char *make, char *model, float *price, bool *available){
 	m_year = year;
 	m_make = make;
 	m_model = model;
@@ -59,81 +86,62 @@ RentalCar::RentalCar(int year*, char make*, char model*, float price*, bool avai
 	printCar();
 }
 
-float estimateCost(int rentDays, float price*){
-	float totalCost;
-	
-	totalCost = rentDays * price;
-	
-	return totalCost;
-}
+RentalCar::printCar(struct RentalAgency *arr){
 
-void printCar(){
-	
+	for(int i = 0; i < NUMAGENCY; i++){
+		cout << arr[i].agencyName << " " << arr[i].charZip << endl;
+		cout << " " << arr[i].inventory[i].getYear << " " <<  arr[i].inventory[i].getMake << " " << arr[i].inventory[i].getModel << " " << arr[i].inventory[i].getPrice << " " << arr[i].inventory[i].getAvailable << endl;
+	}
 }
 
 int main(){
+
 	userMenuPrompt();
+	
 }
 
-int userMenuPrompt(){ //CHANGE THINGS, THIS IS ONLY COPY PASTED
+int userMenuPrompt(){ 
 
 	int userInput;
 
-	struct RentalAgency carsArray[NUMCARS];
-
+	struct RentalAgency carsArray[NUMAGENCY];
 
 	do{
 		cout << "1. Enter your rental car file name.\n";
-		cout << "2. Print out file contents to terminal.\n";
+		cout << "2. Print out rental car info to terminal.\n";
 		cout << "3. Estimate the rental cost.\n";
-		cout << "4. Sort cars by ascending price order.\n";
-		cout << "5. How many days will you rent the car?\n";
-		cout << "6. Which car would you like to choose and for how many days? Enter the rental index number.\n";
-		cout << "7. Exit program.\n";
+		cout << "4. Find the cheapest car.\n";
+		cout << "5. Reserve a car\n";
+		cout << "6. Exit.\n";
 		
 		cin >> userInput;
 		
 		switch(userInput){
 			case 1:
-				//get infile name, insert that and the struct array into readcars to fill the array in.
 				readCars(carsArray); 
 				break;
 			case 2:
-				//call the printcarstoterminal function
-				printCarsToTerminal(carsArray);
+				printAgenciesToTerminal(carsArray);
 				break;
 			case 3:
-				//call the printcarstofile function
 				estimateRentalCost(carsArray);
 				break;
 			case 4:
-				//call the sortcarsbyprice function
-				sortCarsByPrice(carsArray);
+				findCheapestRental(carsArray);
 				break;
 			case 5:
-				//ask user for how many days they want to rent the car
-				//then print out only the cars available sorted by price as well as the total estimated cost based off the number of days they're renting in the rentalcarquery func
-				rentalCarQuery(carsArray);
+				reserveCar(carsArray);
 				break;
 			case 6:
-				//ask user which car they want to rent (the car index number int)
-				//ask them for how many days they want to rent it
-				//plug the car choice (index num) and the number of days (rentDays) into the rentalCarReserve function.
-				//if the car isnt available, print a warning message
-				//if it is, change the index number of the car to a * symbol
-				
-				rentalCarReserve(carsArray);
-				break;
-			case 7:
 				return 0;
 				break;
 		}
-	}while(userInput > 0 && userInput < 8);
+	}while(userInput > 0 && userInput < 7);
 	
 	return 0;
 }
 
-void readCars(struct RentalAgency arr*){
+void readCars(struct RentalAgency *arr){
 	char input[100];
 	ifstream inputFile(input);
 	cout << "Enter your full input file name." << endl;
@@ -147,32 +155,60 @@ void readCars(struct RentalAgency arr*){
 	
 	if(!inputFile.eof()){
 		for(int i = 0; i < NUMCARS; ++i){
-			inputFile >> carsArray[i].agencyName >> carsArray[i].zipcode >> endl >> carsArray[i].make >> carsArray[i].model >> carsArray[i].price >> carsArray[i].available;
+			inputFile >> carsArray[i].agencyName >> carsArray[i].charZip >> endl >> carsArray[i].inventory[i].setYear >> carsArray[i].inventory[i].inventory[i].setMake >> carsArray[i].inventory[i].setModel >> carsArray[i].inventory[i]>>setPrice >> carsArray[i].inventory[i].setAvailable;
 		}
 	}
 	inputFile.close();
 }
 
-void printAgenciesToTerminal(struct RentalAgency arr*){
+void printAgenciesToTerminal(struct RentalAgency *arr){
 	
+	arr.printCar(arr);
 }
 
-void estimateRentalCost(struct RentalAgency arr*){
+void estimateRentalCost(struct RentalAgency *arr){
 
-	char agency[SIZE];
-	int index;
+	int agency, carIndex, days;
 	float cost;
-	cout << "Enter the agency name." << endl;
+	
+	cout << "Enter the agency index (1-3)" << endl;
 	cin >> agency;
-	cout << "Enter the car choice (Select index number)" << endl;
-	cin >> index;
+	cout << "Enter the car index (1-5)" << endl;
+	cin >> carIndex;
+	cout << "Enter the number of days you'd like to rent this car." << endl;
+	cin >> days;
+	
+	arr[agency].estimateCost(arr, agency, carIndex, days);
+}
+
+void findCheapestRental(struct RentalAgency *arr){
+
+	RentalAgency temp;
+
+	for(int i = 0; i < NUMCARS; i++){
+		for(int j = 0; j < NUMCARS; j++){
+			if(arr[j].inventory[j].price > arr[j+1].inventory[j].price && arr[j].inventory[j].available){
+				temp = arr[j];
+				arr[j] = arr[j+1];
+				arr[j+1] = temp;
+			}
+		}
+	}
 	
 }
 
-void findCheapestRental(struct RentalAgency arr*){
-	
-}
+void reserveCar(struct rentalAgency *arr){
 
-void reserveCar(struct rentalAgency arr*){
+	cout << "Enter the agency index (1-3)" << endl;
+	cin >> agency;
+	cout << "Enter the car index (1-5)" << endl;
+	cin >> carIndex;
+	cout << "Enter the number of days you'd like to rent this car." << endl;
+	cin >> days;
+	
+	if(arr[agency].inventory[carIndex].available = true){
+		arr[agency].inventory[carIndex].setReserve();
+	}
+	printAgenciesToTerminal(arr);
 	
 }
